@@ -1,0 +1,695 @@
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #080b12;
+    color: #f1f5f9;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Glassmorphism card effects */
+.glass-card {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.1);
+}
+
+.glass-nav {
+    background: rgba(10, 14, 26, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Gold Gradient Text */
+.text-gold-gradient {
+    background: linear-gradient(135deg, #fff8e7 0%, #f3e5ab 30%, #d4af37 70%, #aa7c11 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gold-border-glow {
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Animated Pin & Pulse */
+@keyframes subtlePulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+}
+
+.animate-pulse-subtle {
+    animation: subtlePulse 3s infinite ease-in-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080b12;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 10px;
+}
+
+/* Canvas Background Fix */
+#stars-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+/* ===== OPENING: MOVING SKY / SPACE ===== */
+#openingScreen {
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 45%, rgba(37, 51, 92, 0.18), transparent 38%),
+        #03050c;
+}
+
+.opening-space,
+.opening-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.opening-space {
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 80%, rgba(212, 175, 55, 0.07), transparent 45%),
+        linear-gradient(145deg, #02040b 0%, #071126 48%, #02030a 100%);
+}
+
+.opening-vignette {
+    z-index: 1;
+    background: radial-gradient(circle at center, transparent 25%, rgba(0, 0, 0, 0.48) 100%);
+}
+
+.space-nebula {
+    position: absolute;
+    width: 75vw;
+    height: 75vw;
+    max-width: 850px;
+    max-height: 850px;
+    border-radius: 50%;
+    filter: blur(55px);
+    opacity: 0.22;
+    mix-blend-mode: screen;
+}
+
+.space-nebula-one {
+    left: -25%;
+    top: 5%;
+    background: radial-gradient(circle, rgba(89, 113, 191, 0.8), transparent 65%);
+    animation: nebulaDrift 14s ease-in-out infinite alternate;
+}
+
+.space-nebula-two {
+    right: -28%;
+    bottom: -20%;
+    background: radial-gradient(circle, rgba(184, 134, 11, 0.65), transparent 62%);
+    animation: nebulaDrift 18s ease-in-out infinite alternate-reverse;
+}
+
+.space-stars {
+    position: absolute;
+    inset: -20%;
+    opacity: 0.85;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.95) 0 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(243,229,171,.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(255,255,255,.55) 0 1px, transparent 1.4px);
+    background-size: 115px 115px, 173px 173px, 247px 247px;
+    background-position: 0 0, 40px 70px, 90px 20px;
+    animation: starFieldMove 24s linear infinite;
+}
+
+.space-stars-delayed {
+    opacity: 0.4;
+    transform: scale(1.15);
+    animation: starFieldMoveReverse 35s linear infinite;
+}
+
+.space-planet {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: inset -20px -18px 35px rgba(0,0,0,.7), 0 0 35px rgba(255,255,255,.08);
+}
+
+.space-planet-one {
+    width: 105px;
+    height: 105px;
+    top: 9%;
+    right: 10%;
+    background:
+        radial-gradient(circle at 30% 25%, #f3e5ab 0 4%, transparent 5%),
+        radial-gradient(circle at 62% 58%, #b8860b 0 10%, transparent 11%),
+        radial-gradient(circle at 35% 68%, #7b5a16 0 7%, transparent 8%),
+        linear-gradient(135deg, #f5df91, #8a6410 72%);
+    opacity: .8;
+    animation: planetFloat 7s ease-in-out infinite;
+}
+
+.space-planet-two {
+    width: 42px;
+    height: 42px;
+    left: 9%;
+    bottom: 14%;
+    background: radial-gradient(circle at 30% 25%, #dbe6ff, #56698f 58%, #18233e);
+    opacity: .7;
+    animation: planetFloat 9s ease-in-out infinite reverse;
+}
+
+.space-orbit {
+    position: absolute;
+    border: 1px solid rgba(230, 202, 101, .16);
+    border-radius: 50%;
+    transform: rotate(-22deg);
+}
+
+.space-orbit-one {
+    width: 260px;
+    height: 80px;
+    right: -50px;
+    top: 12%;
+    animation: orbitSpin 16s linear infinite;
+}
+
+.space-orbit-two {
+    width: 180px;
+    height: 55px;
+    left: -55px;
+    bottom: 20%;
+    animation: orbitSpin 12s linear infinite reverse;
+}
+
+.shooting-star {
+    position: absolute;
+    width: 120px;
+    height: 2px;
+    border-radius: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), rgba(243,229,171,.2));
+    filter: drop-shadow(0 0 5px rgba(243,229,171,.7));
+    transform: rotate(-32deg);
+    opacity: 0;
+}
+
+.shooting-star-one {
+    top: 22%;
+    left: 12%;
+    animation: shootingStar 6s ease-in-out infinite;
+}
+
+.shooting-star-two {
+    top: 48%;
+    right: 5%;
+    animation: shootingStar 8s ease-in-out 3s infinite;
+}
+
+@keyframes nebulaDrift {
+    from { transform: translate3d(-3%, -2%, 0) scale(1); }
+    to { transform: translate3d(6%, 5%, 0) scale(1.12); }
+}
+
+@keyframes starFieldMove {
+    from { transform: translate3d(0, 0, 0) rotate(0deg); }
+    to { transform: translate3d(-55px, 75px, 0) rotate(1deg); }
+}
+
+@keyframes starFieldMoveReverse {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(70px, -50px, 0); }
+}
+
+@keyframes planetFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(7deg); }
+}
+
+@keyframes orbitSpin {
+    from { transform: rotate(-22deg) rotate(0deg); }
+    to { transform: rotate(-22deg) rotate(360deg); }
+}
+
+@keyframes shootingStar {
+    0%, 72%, 100% { opacity: 0; transform: translate3d(0,0,0) rotate(-32deg); }
+    76% { opacity: 1; }
+    88% { opacity: 0; transform: translate3d(190px, 105px, 0) rotate(-32deg); }
+}
+
+/* ===== AUTO SCROLL ===== */
+html {
+    scroll-behavior: smooth;
+}
+
+body.auto-scrolling {
+    scroll-behavior: auto;
+}
+
+.auto-scroll-indicator {
+    position: fixed;
+    left: 50%;
+    bottom: 92px;
+    transform: translateX(-50%);
+    z-index: 40;
+    padding: 7px 12px;
+    border: 1px solid rgba(212,175,55,.25);
+    border-radius: 999px;
+    background: rgba(3,5,12,.65);
+    backdrop-filter: blur(8px);
+    color: rgba(243,229,171,.8);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity .4s ease;
+    pointer-events: none;
+}
+
+.auto-scroll-indicator.visible {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .space-nebula,
+    .space-stars,
+    .space-planet,
+    .space-orbit,
+    .shooting-star {
+        animation: none !important;
+    }
+}
+
+/* Modal Slide Animation */
+.modal-enter {
+    animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Prevent touch scroll on backdrop */
+#modalBackdrop {
+    touch-action: none;
+    overscroll-behavior: contain;
+}
+
+/* Allow scrolling inside modal panels */
+.modal-enter > div {
+    max-height: 85vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.invitation-content {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.invitation-content.is-locked {
+    opacity: 0;
+    transform: translateY(1rem);
+    pointer-events: none;
+    visibility: hidden;
+}
+
+#openingScreen {
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#openingScreen.is-dismissed {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ===== ENVELOPE OPENING SEQUENCE ===== */
+
+@keyframes envelopeBreathe {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50%       { transform: translateY(-5px) scale(1.012); }
+}
+
+/* Opening screen gets perspective so rotateX on flap works in 3D */
+#openingScreen {
+    perspective: 1400px;
+    perspective-origin: 50% 40%;
+}
+
+/* Container: holds everything */
+.envelope-container {
+    position: relative;
+    width: 340px;
+    height: 230px;
+    cursor: pointer;
+    overflow: visible;
+}
+@media (min-width: 768px) {
+    .envelope-container { width: 420px; height: 285px; }
+}
+.envelope-container.is-open {
+    /* Container stays visible, child elements handle their own fading */
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+/* Wrapper: idle breathe while still closed; perspective here ensures rotateX on flap is 3D */
+.env-wrapper {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+    perspective-origin: 50% -20%;
+}
+.envelope-container:not(.is-open) .env-wrapper {
+    animation: envelopeBreathe 4s ease-in-out infinite;
+}
+
+/* ── LAYER 1: Envelope back ── */
+.env-back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #fdfcf8 0%, #f4f2ea 100%);
+    border-radius: 3px;
+    z-index: 1;
+    box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.6),
+        0  4px 14px rgba(0, 0, 0, 0.35),
+        inset 0  2px 0 rgba(255, 255, 255, 0.85),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.06);
+    transition: opacity 0.8s ease 0.6s;
+}
+.is-open .env-back {
+    opacity: 0;
+}
+
+/* ── LAYER 2: Card clip container + invitation card ── */
+.env-card-clip {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    clip-path: inset(0 0 0 0);
+}
+.is-open .env-card-clip {
+    /* Instantly release clip-path on all sides so it can scale and translate */
+    clip-path: inset(-300% -300% -300% -300%);
+    transition: clip-path 0s linear 0s;
+}
+
+.env-card {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 5%;
+    height: 84%;
+    background: #080f1e;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: inset 0 0 25px rgba(212, 175, 55, 0.08);
+}
+
+@keyframes cardSequence {
+    0%   { transform: translateY(0) scale(1); opacity: 1; }
+    30%  { transform: translateY(-70%) scale(1); opacity: 1; } /* 0.6s: slides out */
+    70%  { transform: translateY(-10%) scale(1.2); opacity: 1; } /* 1.4s: centers & zooms */
+    100% { transform: translateY(-10%) scale(1.2); opacity: 0; } /* 2.0s: fades out */
+}
+
+.is-open .env-card {
+    animation: cardSequence 2.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* ── LAYER 3: Front face panels — fully seal the envelope when closed ── */
+/* Left/right panels use FULL side triangles (corner-to-corner) so the entire
+   front face is covered. The flap (L4) seals the top triangle. Together the
+   four panels tile the entire envelope face → card is 100% hidden. */
+.env-pocket-left,
+.env-pocket-right,
+.env-pocket-bottom {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    transition: opacity 0.8s ease 0.6s;
+}
+.is-open .env-pocket-left,
+.is-open .env-pocket-right,
+.is-open .env-pocket-bottom {
+    opacity: 0;
+}
+
+.env-pocket-left {
+    background: linear-gradient(135deg, #f5f3eb 0%, #eae7dd 100%);
+    clip-path: polygon(0 0, 50% 62%, 0 100%);
+    box-shadow: 3px 0 8px rgba(0, 0, 0, 0.14);
+}
+.env-pocket-right {
+    background: linear-gradient(225deg, #f5f3eb 0%, #eae7dd 100%);
+    clip-path: polygon(100% 0, 50% 62%, 100% 100%);
+    box-shadow: -3px 0 8px rgba(0, 0, 0, 0.14);
+}
+.env-pocket-bottom {
+    background: linear-gradient(to bottom, #e5e2d8, #dedad0);
+    clip-path: polygon(0 100%, 50% 62%, 100% 100%);
+    box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ── LAYER 4: Top flap ── */
+.env-flap {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(175deg, #fefdfa 0%, #f3f1e8 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 62%);
+    z-index: 4;
+    transform-origin: top center;
+    transform: rotateX(0deg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.28));
+}
+.env-flap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.7), transparent);
+}
+.is-open .env-flap {
+    transform: rotateX(200deg);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0s, opacity 0.8s ease 0.6s;
+}
+
+/* ── Wax seal (child of flap) ── */
+.env-seal {
+    position: absolute;
+    /* sits at the flap's tip (62% from top of the full height = 38% from bottom) */
+    bottom: 38%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #e8c84a 0%, #c9900a 52%, #7a4e04 100%);
+    z-index: 5;
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.5),
+        inset 0  2px 6px rgba(255, 255, 255, 0.35),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* seal dissolves quickly when flap opens */
+    transition: opacity 0.18s ease 0.12s, transform 0.30s ease 0.12s;
+}
+.env-seal::before {
+    content: 'A\26S'; /* A&S in CSS unicode */
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffe070;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65), 0 -1px 1px rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.5px;
+}
+.is-open .env-seal {
+    opacity: 0;
+    transform: translate(-50%, 50%) scale(1.45);
+}
+
+.message-card {
+    background: rgba(15, 23, 42, 0.6);
+    border-left: 2px solid #d4af37;
+    padding: 0.75rem 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    margin-bottom: 0.5rem;
+}
+
+/* Loader for RSVP */
+.loader {
+    border: 3px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    border-top: 3px solid #d4af37;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== REFINED OPENING SPACE ANIMATION ===== */
+#openingScreen {
+    isolation: isolate;
+}
+
+.opening-space {
+    z-index: 0;
+}
+
+.opening-space::before,
+.opening-space::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+/* Slow moving cosmic glow / aurora */
+.opening-space::before {
+    width: 120vmax;
+    height: 70vmax;
+    left: -35vmax;
+    top: 18%;
+    background:
+        radial-gradient(ellipse at center, rgba(92, 122, 220, .20) 0%, rgba(71, 91, 170, .08) 28%, transparent 68%);
+    filter: blur(28px);
+    animation: cosmicAurora 16s ease-in-out infinite alternate;
+}
+
+/* Distant glowing moon */
+.opening-space::after {
+    width: 150px;
+    height: 150px;
+    right: 9%;
+    top: 12%;
+    background:
+        radial-gradient(circle at 34% 30%, rgba(255,255,255,.95) 0 3%, transparent 4%),
+        radial-gradient(circle at 62% 55%, rgba(116,92,48,.35) 0 8%, transparent 9%),
+        radial-gradient(circle at 35% 70%, rgba(116,92,48,.25) 0 6%, transparent 7%),
+        radial-gradient(circle at 35% 30%, #fff7d7 0%, #d9c47e 42%, #77632e 76%, transparent 77%);
+    box-shadow: 0 0 45px rgba(243,229,171,.14), 0 0 100px rgba(110,140,230,.10);
+    opacity: .72;
+    animation: moonFloat 8s ease-in-out infinite;
+}
+
+.space-stars {
+    opacity: .95;
+    animation: starFieldMove 20s linear infinite, starPulse 4s ease-in-out infinite alternate;
+}
+
+.space-stars-delayed {
+    animation: starFieldMoveReverse 31s linear infinite, starPulse 5s ease-in-out 1s infinite alternate;
+}
+
+.space-planet-one {
+    box-shadow: inset -25px -22px 38px rgba(0,0,0,.72), 0 0 25px rgba(243,229,171,.13), 0 0 70px rgba(90,120,210,.08);
+}
+
+.envelope-container {
+    z-index: 3;
+}
+
+.opening-vignette {
+    z-index: 2;
+}
+
+@keyframes cosmicAurora {
+    0%   { transform: translate3d(-4%, -2%, 0) rotate(-5deg) scale(1); opacity: .55; }
+    50%  { transform: translate3d(18%, 5%, 0) rotate(4deg) scale(1.08); opacity: .85; }
+    100% { transform: translate3d(34%, -6%, 0) rotate(8deg) scale(1.14); opacity: .6; }
+}
+
+@keyframes moonFloat {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(-12px, 18px, 0) scale(1.045); }
+}
+
+@keyframes starPulse {
+    0% { opacity: .55; }
+    100% { opacity: 1; }
+}
+
+/* Smooth, native-feeling scrolling while the cinematic driver is active. */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-bottom: 90px;
+}
+
+body.auto-scrolling {
+    scroll-behavior: auto;
+}
+
+.auto-scroll-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.auto-scroll-indicator span {
+    display: inline-block;
+    animation: autoScrollArrow 1.2s ease-in-out infinite;
+}
+
+@keyframes autoScrollArrow {
+    0%, 100% { transform: translateY(-2px); opacity: .45; }
+    50% { transform: translateY(3px); opacity: 1; }
+}

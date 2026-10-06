@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ahmed & Sherouk | Wedding Invitation</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#fff8e7',
+                            300: '#f3e5ab',
+                            400: '#e6ca65',
+                            500: '#d4af37',
+                            600: '#b8860b',
+                            700: '#996515'
+                        },
+                        night: {
+                            bg: '#080b12',
+                            card: 'rgba(15, 23, 42, 0.75)',
+                            border: 'rgba(212, 175, 55, 0.25)'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        cursive: ['Great Vibes', 'cursive'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        arabic: ['Amiri', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600;700;800&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="min-h-screen text-slate-100 relative pb-28">
+
+    <!-- Starry Background Canvas -->
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- Invitation opening screen -->
+    <section id="openingScreen" class="fixed inset-0 z-[70] flex items-center justify-center px-6"
+        role="dialog" aria-modal="true" aria-label="Open the wedding invitation">
+
+        <!-- Animated celestial background for the opening -->
+        <div class="opening-space" aria-hidden="true">
+            <div class="space-nebula space-nebula-one"></div>
+            <div class="space-nebula space-nebula-two"></div>
+            <div class="space-stars"></div>
+            <div class="space-stars space-stars-delayed"></div>
+            <div class="space-planet space-planet-one"></div>
+            <div class="space-planet space-planet-two"></div>
+            <div class="shooting-star shooting-star-one"></div>
+            <div class="shooting-star shooting-star-two"></div>
+            <div class="space-orbit space-orbit-one"></div>
+            <div class="space-orbit space-orbit-two"></div>
+        </div>
+
+        <div class="opening-vignette" aria-hidden="true"></div>
+
+        <div id="envelopeContainer" class="envelope-container cursor-pointer" tabindex="0" role="button"
+            aria-label="Open Ahmed and Sherouk's wedding invitation">
+
+            <!-- Wrapper for idle breathe animation -->
+            <div class="env-wrapper">
+
+                <!-- LAYER 1: Envelope back (base) -->
+                <div class="env-back"></div>
+
+                <!-- LAYER 2: Card clip → hides card inside envelope until flap opens -->
+                <div class="env-card-clip">
+                    <div class="env-card">
+                        <div class="text-[10px] tracking-[0.35em] uppercase text-gold-400 mb-2">You are invited</div>
+                        <div class="font-cursive text-3xl md:text-4xl text-gold-300 mb-2 whitespace-nowrap">Ahmed & Sherouk</div>
+                        <div class="text-[10px] tracking-widest text-slate-300 uppercase">Friday, 6 November 2026</div>
+                    </div>
+                </div>
+
+                <!-- LAYER 3: Pocket panels (LOWER triangles only – leaves top opening clear for card) -->
+                <div class="env-pocket-left"></div>
+                <div class="env-pocket-right"></div>
+                <div class="env-pocket-bottom"></div>
+
+                <!-- LAYER 4: Top flap + wax seal -->
+                <div class="env-flap">
+                    <div class="env-seal"></div>
+                </div>
+
+            </div><!-- /.env-wrapper -->
+
+            <div class="absolute -bottom-10 left-0 right-0 text-center pointer-events-none">
+                <div class="text-xs text-slate-400 animate-pulse-subtle">Tap to open</div>
+            </div>
+        </div>
+
+    </section>
+
+    <main id="invitationContent" class="invitation-content is-locked max-w-md mx-auto relative z-10 px-4 pt-6 space-y-8"
+        aria-hidden="true">
+
+        <!-- Hero Section -->
+        <header class="text-center pt-8 pb-4 relative">
+            <div
+                class="inline-block px-4 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-sm text-gold-300 text-xs font-semibold tracking-widest uppercase mb-4 animate-pulse-subtle">
+                Save The Date
+            </div>
+
+            <h1 class="font-serif text-3xl font-bold tracking-wider text-gold-gradient uppercase mb-1">
+                Wedding of
+            </h1>
+
+            <div class="my-4 relative inline-block">
+                <span class="font-cursive text-6xl md:text-7xl text-gold-300 block drop-shadow-md">
+                    Ahmed & Sherouk
+                </span>
+            </div>
+
+            <!-- Lunar/Celestial Accents -->
+            <div class="flex items-center justify-center gap-3 mt-2 text-gold-400/80 text-sm">
+                <i class="fa-solid fa-moon text-xs"></i>
+                <span class="font-serif tracking-widest text-xs uppercase text-slate-300">06.11.2026 • Friday</span>
+                <i class="fa-solid fa-star text-xs"></i>
+            </div>
+        </header>
+
+        <!-- Invitation Badge Card -->
+        <section class="glass-card rounded-3xl p-6 text-center relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-gold-500/10 rounded-full blur-2xl"></div>
+
+            <h2 class="font-arabic text-3xl text-gold-300 font-bold mb-3">Special Invitation</h2>
+            <p class="text-xs text-slate-300 leading-relaxed font-light mb-4">
+                WE ARE DELIGHTED TO INVITE YOU TO CELEBRATE OUR WEDDING. YOUR PRESENCE WOULD TRULY HONOR US.
+            </p>
+            <div class="h-px bg-gradient-to-r from-transparent via-gold-500/40 to-transparent my-4"></div>
+            <div class="flex justify-center items-center gap-2 text-gold-400 font-serif text-xs">
+                <i class="fa-solid fa-hotel"></i>
+                <span>WHITE PLAZA • RAMAG HOTEL • NEW CAIRO</span>
+            </div>
+            <div class="mt-4 space-y-1 text-xs text-slate-300">
+                <p>Celebration: 3:00–6:00 PM <span class="text-gold-400">(Katb ElKetab: 3:30 PM)</span></p>
+                <p class="text-slate-400">Capacity is limited to 200 guests. RSVP does not reserve a seat.</p>
+            </div>
+        </section>
+
+        <!-- Pinned Calendar Card -->
+        <section class="glass-card rounded-3xl p-6 relative">
+            <!-- Glass Header Ribbon / Tag -->
+            <div class="flex justify-between items-center text-xs text-slate-400 border-b border-white/10 pb-3 mb-4">
+                <span class="font-mono tracking-widest uppercase text-gold-400">2026</span>
+                <span class="font-bold text-slate-200 tracking-widest uppercase">NOVEMBER</span>
+                <span class="font-mono tracking-widest uppercase text-gold-400">FRI</span>
+            </div>
+
+            <!-- Big Date Number -->
+            <div class="text-center py-2">
+                <div class="relative inline-block">
+                    <!-- Decorative Frame Pin -->
+                    <div class="w-3 h-3 rounded-full bg-gold-500 shadow-lg shadow-gold-500/50 mx-auto -top-2 relative">
+                    </div>
+                    <span class="font-serif text-7xl font-extrabold text-gold-gradient tracking-tight block my-1">
+                        06
+                    </span>
+                </div>
+                <div class="text-sm font-semibold tracking-wider text-slate-300 uppercase mt-1">FRIDAY, 6 NOVEMBER</div>
+                <div class="text-xs text-gold-400/90 font-mono mt-1"><i class="fa-regular fa-clock mr-1"></i> 3:00–6:00
+                    PM
+                </div>
+                <div class="text-xs text-slate-400 font-mono mt-1">Katb ElKetab • 3:30 PM</div>
+            </div>
+
+            <!-- Calendar Action Button -->
+            <button onclick="saveToCalendar()"
+                class="w-full mt-5 py-2.5 rounded-2xl bg-gold-500/15 hover:bg-gold-500/25 border border-gold-500/40 text-gold-300 font-medium text-xs tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2">
+                <i class="fa-regular fa-calendar-plus"></i>
+                <span>Save The Date To Calendar</span>
+            </button>
+        </section>
+
+        <!-- Countdown Timer -->
+        <section class="glass-card rounded-3xl p-6 text-center">
+            <h3 class="text-xs uppercase tracking-widest text-gold-400 font-semibold mb-4">COUNTDOWN TO THE BIG DAY</h3>
+            <div class="grid grid-cols-4 gap-2 text-center" id="countdown">
+                <div class="p-3 bg-slate-900/60 rounded-2xl border border-gold-500/20">
+                    <span id="days" class="font-serif text-2xl font-bold text-gold-300 block">00</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider">Days</span>
+                </div>
+                <div class="p-3 bg-slate-900/60 rounded-2xl border border-gold-500/20">
+                    <span id="hours" class="font-serif text-2xl font-bold text-gold-300 block">00</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider">Hrs</span>
+                </div>
+                <div class="p-3 bg-slate-900/60 rounded-2xl border border-gold-500/20">
+                    <span id="minutes" class="font-serif text-2xl font-bold text-gold-300 block">00</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider">Min</span>
+                </div>
+                <div class="p-3 bg-slate-900/60 rounded-2xl border border-gold-500/20">
+                    <span id="seconds" class="font-serif text-2xl font-bold text-gold-300 block">00</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider">Sec</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Public RSVP Messages -->
+        <section class="glass-card rounded-3xl p-6 relative overflow-hidden">
+            <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-gold-500/5 rounded-full blur-2xl pointer-events-none">
+            </div>
+
+            <div class="flex items-center gap-2 mb-4 justify-center">
+                <i class="fa-solid fa-envelope-open-text text-gold-400 text-sm"></i>
+                <h3 class="text-xs uppercase tracking-widest text-gold-400 font-semibold">Guest Wishes</h3>
+            </div>
+
+            <div id="messagesContainer" class="space-y-3 relative z-10 min-h-[100px] flex flex-col justify-center">
+                <!-- Messages will be injected here dynamically -->
+                <div class="text-center text-slate-400 text-xs">
+                    <div class="loader mx-auto !block !border-t-gold-500"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Notice -->
+        <footer class="text-center py-6 text-xs text-slate-500 space-y-1">
+            <p class="font-serif tracking-widest text-gold-400/80">AHMED & SHEROUK • 2026</p>
+            <p>Made with ❤️️ for your special moment</p>
+            <br>
+            <br>
+            <br>
+            <p class="pt-2 border-t border-white/5 mt-2 text-slate-600">
+                Congratulations to the happy couple! May your love continue to grow and flourish in the years to come. Wishing you a lifetime of happiness, laughter, and cherished memories together❤️️
+            </p>
+        </footer>
+
+        <!-- Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 right-0 z-40 max-w-md mx-auto glass-nav rounded-t-3xl px-4 py-3">
+            <div class="flex justify-around items-center text-center">
+                <!-- Contact -->
+                <button onclick="openModal('contactModal')"
+                    class="flex flex-col items-center gap-1 text-slate-400 hover:text-gold-300 transition-colors group">
+                    <div
+                        class="w-9 h-9 rounded-full bg-slate-800/80 group-hover:bg-gold-500/20 flex items-center justify-center border border-white/10 group-hover:border-gold-500/40">
+                        <i class="fa-solid fa-phone text-xs"></i>
+                    </div>
+                    <span class="text-[10px] tracking-wider uppercase font-medium">Contact</span>
+                </button>
+
+                <!-- Music -->
+                <button onclick="openModal('musicModal')"
+                    class="flex flex-col items-center gap-1 text-slate-400 hover:text-gold-300 transition-colors group">
+                    <div
+                        class="w-9 h-9 rounded-full bg-slate-800/80 group-hover:bg-gold-500/20 flex items-center justify-center border border-white/10 group-hover:border-gold-500/40 relative">
+                        <i id="musicIcon" class="fa-solid fa-music text-xs"></i>
+                        <span id="musicBadge"
+                            class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping hidden"></span>
+                    </div>
+                    <span class="text-[10px] tracking-wider uppercase font-medium">Music</span>
+                </button>
+
+                <!-- Location (Highlighted Center Button) -->
+                <button onclick="openModal('locationModal')"
+                    class="flex flex-col items-center gap-1 text-gold-300 group -mt-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-gradient-to-tr from-gold-600 to-gold-300 text-slate-950 flex items-center justify-center shadow-lg shadow-gold-500/30 group-hover:scale-105 transition-transform border-2 border-slate-900">
+                        <i class="fa-solid fa-location-dot text-base"></i>
+                    </div>
+                    <span class="text-[10px] tracking-wider uppercase font-semibold text-gold-300">Location</span>
+                </button>
+
+                <!-- Date -->
+                <button onclick="openModal('dateModal')"
+                    class="flex flex-col items-center gap-1 text-slate-400 hover:text-gold-300 transition-colors group">
+                    <div
+                        class="w-9 h-9 rounded-full bg-slate-800/80 group-hover:bg-gold-500/20 flex items-center justify-center border border-white/10 group-hover:border-gold-500/40">
+                        <i class="fa-solid fa-calendar-days text-xs"></i>
+                    </div>
+                    <span class="text-[10px] tracking-wider uppercase font-medium">Date</span>
+                </button>
+
+                <!-- RSVP -->
+                <button onclick="openModal('rsvpModal')"
+                    class="flex flex-col items-center gap-1 text-slate-400 hover:text-gold-300 transition-colors group">
+                    <div
+                        class="w-9 h-9 rounded-full bg-slate-800/80 group-hover:bg-gold-500/20 flex items-center justify-center border border-white/10 group-hover:border-gold-500/40">
+                        <i class="fa-solid fa-heart text-xs"></i>
+                    </div>
+                    <span class="text-[10px] tracking-wider uppercase font-medium">RSVP</span>
+                </button>
+
+            </div>
+        </nav>
+    </main>
+
+    <!-- MODAL CONTAINER BACKDROP -->
+    <div id="modalBackdrop"
+        class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden transition-opacity duration-300"
+        onclick="closeAllModals()"></div>
+
+    <!-- RSVP MODAL -->
+    <div id="rsvpModal" class="fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto hidden modal-enter">
+        <div class="glass-card rounded-t-3xl p-6 border-t border-gold-500/40 relative">
+            <button onclick="closeAllModals()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="font-serif text-xl font-bold text-gold-gradient mb-1">RSVP - Attendance</h3>
+            <p class="text-xs text-slate-400 mb-3">Please let us know whether you can join us.</p>
+            <p class="text-xs text-gold-300 mb-5">Capacity is limited to 200 guests. Submitting an RSVP does not
+                guarantee or reserve a seat.</p>
+
+            <form id="rsvpForm" onsubmit="handleRSVPSubmit(event)" class="space-y-4">
+                <div>
+                    <label for="guestName" class="block text-xs text-slate-300 mb-1">Your name</label>
+                    <input type="text" id="guestName" name="name" required autocomplete="name"
+                        placeholder="Your full name"
+                        class="w-full bg-slate-900/80 border border-gold-500/30 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-gold-400">
+                </div>
+
+                <div>
+                    <label for="guestEmail" class="block text-xs text-slate-300 mb-1">Email address</label>
+                    <input type="email" id="guestEmail" name="email" required autocomplete="email" inputmode="email"
+                        placeholder="you@example.com"
+                        class="w-full bg-slate-900/80 border border-gold-500/30 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-gold-400">
+                </div>
+
+                <div>
+                    <label for="attendanceStatus" class="block text-xs text-slate-300 mb-1">Attendance</label>
+                    <select id="attendanceStatus" name="attendance" required
+                        class="w-full bg-slate-900/80 border border-gold-500/30 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-gold-400">
+                        <option value="">Please select</option>
+                        <option value="Attending">Yes, I will attend</option>
+                        <option value="Unable to attend">Sorry, I cannot attend</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="guestCount" class="block text-xs text-slate-300 mb-1">Number of companions joining
+                        you</label>
+                    <input type="number" id="guestCount" name="companions" min="0" step="1" value="0" required
+                        class="w-full bg-slate-900/80 border border-gold-500/30 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-gold-400">
+                </div>
+
+                <div>
+                    <label for="guestWish" class="block text-xs text-slate-300 mb-1">Congratulations message</label>
+                    <textarea id="guestWish" name="message" rows="2" required
+                        placeholder="Write a message for the couple..."
+                        class="w-full bg-slate-900/80 border border-gold-500/30 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-gold-400"></textarea>
+                </div>
+
+                <label class="flex items-start gap-2 text-xs text-slate-300">
+                    <input id="emailConsent" type="checkbox" required class="mt-0.5 accent-yellow-500">
+                    <span>I confirm that this is my email address and agree to include it with my RSVP.</span>
+                </label>
+
+                <button id="rsvpSubmitBtn" type="submit"
+                    class="w-full py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 text-slate-950 font-bold text-sm tracking-wider uppercase hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                    <i id="rsvpBtnIcon" class="fa-solid fa-paper-plane"></i>
+                    <div id="rsvpLoader" class="loader"></div>
+                    <span id="rsvpBtnText">Send RSVP</span>
+                </button>
+            </form>
+            <div id="rsvpResult"></div>
+        </div>
+    </div>
+
+    <!-- LOCATION MODAL -->
+    <div id="locationModal" class="fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto hidden modal-enter">
+        <div class="glass-card rounded-t-3xl p-6 border-t border-gold-500/40 relative">
+            <button onclick="closeAllModals()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="font-serif text-xl font-bold text-gold-gradient mb-1">Venue Location</h3>
+            <p class="text-xs text-slate-400 mb-4">White Plaza, Ramag Hotel, New Cairo</p>
+
+            <div class="bg-slate-900/80 border border-gold-500/20 rounded-2xl p-4 space-y-3 mb-5">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-hotel text-gold-400 mt-1"></i>
+                    <div>
+                        <div class="text-sm font-semibold text-slate-200">White Plaza, Ramag Hotel</div>
+                        <div class="text-xs text-slate-400">El-Mushir Tantawy Axis, 5th Settlement, New Cairo</div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://www.google.com/maps/search/?api=1&query=30.0444,31.2357" target="_blank"
+                rel="noopener noreferrer"
+                class="w-full py-3 rounded-xl bg-gold-500/20 hover:bg-gold-500/30 border border-gold-500/50 text-gold-300 font-bold text-sm tracking-wider uppercase transition-colors flex items-center justify-center gap-2">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Open in Google Maps</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- MUSIC MODAL -->
+    <div id="musicModal" class="fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto hidden modal-enter">
+        <div class="glass-card rounded-t-3xl p-6 border-t border-gold-500/40 relative text-center">
+            <button onclick="closeAllModals()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div
+                class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
+                <i class="fa-solid fa-music text-2xl text-gold-400"></i>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-gold-gradient mb-1">Background Music</h3>
+            <p class="text-xs text-slate-400 mb-6">Perfect • Ed Sheeran</p>
+
+            <audio id="bgAudio" loop preload="none">
+                <source src="Perfect.mp3" type="audio/mpeg">
+                Your browser does not support audio element.
+            </audio>
+            <p id="musicStatus" class="text-xs text-slate-400 mt-3" aria-live="polite"></p>
+
+            <div class="flex justify-center items-center gap-4">
+                <button id="playPauseBtn" onclick="toggleAudio()"
+                    class="w-full py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 text-slate-950 font-bold text-sm tracking-wider uppercase hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                    <i id="playBtnIcon" class="fa-solid fa-play"></i>
+                    <span id="playBtnText">Play Music</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATE MODAL -->
+    <div id="dateModal" class="fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto hidden modal-enter">
+        <div class="glass-card rounded-t-3xl p-6 border-t border-gold-500/40 relative">
+            <button onclick="closeAllModals()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="font-serif text-xl font-bold text-gold-gradient mb-1">Save the Date</h3>
+            <p class="text-xs text-slate-400 mb-4">Ahmed & Sherouk</p>
+
+            <div class="bg-slate-900/80 border border-gold-500/20 rounded-2xl p-4 space-y-3 mb-5 text-center">
+                <div class="font-bold text-lg text-slate-200">Friday, 6 November 2026</div>
+                <div class="text-sm text-gold-400">3:00–6:00 PM</div>
+                <div class="text-xs text-slate-400 border-t border-gold-500/10 pt-3 mt-2">Katb ElKetab: 3:30 PM</div>
+            </div>
+
+            <button onclick="saveToCalendar()"
+                class="w-full py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 text-slate-950 font-bold text-sm tracking-wider uppercase hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                <i class="fa-regular fa-calendar-plus"></i>
+                <span>Add to Calendar</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- CONTACT MODAL -->
+    <div id="contactModal" class="fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto hidden modal-enter">
+        <div class="glass-card rounded-t-3xl p-6 border-t border-gold-500/40 relative">
+            <button onclick="closeAllModals()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="font-serif text-xl font-bold text-gold-gradient mb-1">Contact Details</h3>
+            <p class="text-xs text-slate-400 mb-5">For RSVP or questions, email Sherouk.</p>
+
+            <div class="space-y-3">
+                <a href="mailto:sherouk.ahmed1994@gmail.com"
+                    class="w-full p-3 bg-slate-900/60 border border-gold-500/20 rounded-xl text-slate-200 flex items-center justify-between hover:bg-slate-800/60 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope text-gold-400 text-sm"></i>
+                        <span class="text-xs font-semibold">sherouk.ahmed1994@gmail.com</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
