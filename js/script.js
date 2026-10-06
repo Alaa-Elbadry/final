@@ -381,31 +381,7 @@ function saveToCalendar() {
 }
 
 /* Fetch Latest Guest Messages */
-async function fetchLatestMessages() {
-    const container = document.getElementById('messagesContainer');
-    if (!container) return;
-    
-    try {
-        const response = await fetch('/api/messages');
-        if (response.ok) {
-            const messages = await response.json();
-            
-            if (messages.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-400 text-center italic">Be the first to leave a message!</p>';
-                return;
-            }
-            
-            container.innerHTML = messages.map(msg => `
-                <div class="message-card">
-                    <p class="text-sm text-slate-200 italic mb-2">"${escapeHtml(msg.message)}"</p>
-                    <div class="text-xs text-gold-400 text-right">— ${escapeHtml(msg.name)}</div>
-                </div>
-            `).join('');
-        }
-    } catch (error) {
-        console.error("Error fetching messages:", error);
-    }
-}
+
 
 // Helper to escape HTML and prevent XSS
 function escapeHtml(unsafe) {
